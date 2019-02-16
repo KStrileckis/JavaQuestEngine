@@ -1,0 +1,41 @@
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+/**
+ *
+ * @author Kevin Strileckis
+ */
+public class QuestListener implements ActionListener {
+    
+    /*These variables are not included in documentation*/
+    public QuestBehavior qb;
+    /* * * * */
+    
+    private QuestWindow questWind;
+    
+    public QuestListener(QuestWindow t){
+        super();
+        questWind = t;
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        System.out.println("Entered actionPerformed");
+        QuestButton q = (QuestButton)(e.getSource());
+        
+        //Set QuestWindow's last identity to this button's identity
+        questWind.setIndicator(q.getIdentity());
+        
+        if(q.getType() == 1){
+            questWind.setText(q.getTextChange());
+        }else if(q.getType() == 2){
+            questWind.setImage(q.getImageURLChange());
+        }else if(q.getType() == 3){
+            questWind.setText(q.getTextChange());
+            questWind.setImage(q.getImageURLChange());
+        }
+        
+        qb.performBehavior(q.getIdentity());
+    }
+    
+}
