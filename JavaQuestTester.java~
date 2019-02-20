@@ -27,7 +27,6 @@ public class JavaQuestTester {
         
         top.saveAsStart();
         top.setGrayImage();
-        top.playSong("\\sfx\\Dance1.mp3");
         
         //Establish behaviors
         QuestBehaviorHandler handle = new QuestBehaviorHandler(top);
