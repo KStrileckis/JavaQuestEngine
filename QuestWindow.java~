@@ -18,6 +18,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextPane;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.Media;
+import java.net.URL;
 
 /**
  *
@@ -54,7 +57,25 @@ public class QuestWindow {
     private Color startBackgroundColor;
     private String startFontName;
     private int startFontStyle, startFontSize;
+    private MediaPlayer songPlayer;
+    private Media songMedia;
     /* * * * */
+    
+    /*Music Playing*/
+    public void playSong(String url){
+      url = System.getProperty("user.dir") + url;
+      url = url.replace("\\", "/");
+      url= "file:///"+url;
+      url = url.replace(" ", "%20");
+      //String path = new File(url).getAbsolutePath();
+      System.out.println(url);
+      //Media songMedia = new Media(url);
+      Media songMedia = new Media( "http://download.oracle.com/otndocs/products/javafx/oow2010-2.flv");
+      songPlayer = new MediaPlayer(songMedia);
+      songPlayer.setAutoPlay(true);
+      //songPlayer.play();
+    }
+    /* * * * * */
     
     /*Panel Updating Methods*/
     public void saveAsStart(){
@@ -139,6 +160,7 @@ public class QuestWindow {
         JLabel picLabel = new JLabel(new ImageIcon(scaledImage));
         image.removeAll();
         image.add(picLabel);
+        image.revalidate();
         return true;
     }
     public boolean setByteImage(){
@@ -156,6 +178,7 @@ public class QuestWindow {
         JLabel picLabel = new JLabel(new ImageIcon(scaledImage));
         image.removeAll();
         image.add(picLabel);
+        image.revalidate();
         return true;
     }
     public boolean setImage(){
@@ -173,6 +196,7 @@ public class QuestWindow {
         JLabel picLabel = new JLabel(new ImageIcon(scaledImage));
         image.removeAll();
         image.add(picLabel);
+        image.revalidate();
         return true;
     }
     public boolean setText(){
@@ -343,6 +367,10 @@ public class QuestWindow {
         gbc.fill = GridBagConstraints.HORIZONTAL;
         buttons = new JPanel();
         top.add(buttons,gbc);
+        /* * * * * */
+        
+        /*Create MediaPlayer*/
+        //songPlayer = new MediaPlayer(songMedia);//moved
         /* * * * * */
         
         top.pack();
