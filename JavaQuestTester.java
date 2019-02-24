@@ -6,7 +6,7 @@ public class JavaQuestTester {
 
     public static void main(String[] args) {
         //Set up the game scene
-        QuestWindow top = new QuestWindow("My Game");
+        QuestWindow top = new QuestWindow("My Game", 550, 550, 200,100);
         top.setText("There are two paths ahead of you. \nOne leads into a cave, the other into the valley.");
         top.setBackground("red");
         top.setFontSize(14);
@@ -26,9 +26,7 @@ public class JavaQuestTester {
         top.darkenBackground();
         
         top.saveAsStart();
-        top.setGrayImage();
-        top.playSong("\\sfx\\Dance1.mp3");
-        
+        top.enableMenu();
         //Establish behaviors
         QuestBehaviorHandler handle = new QuestBehaviorHandler(top);
     }

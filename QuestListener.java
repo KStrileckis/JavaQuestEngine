@@ -17,25 +17,34 @@ public class QuestListener implements ActionListener {
         super();
         questWind = t;
     }
-
+    
+    public void execute(String id){
+      //Set QuestWindow's last identity to this button's identity
+        questWind.setIndicator(id);
+        questWind.choices.add(id);
+        
+        
+        qb.performBehavior(id);
+    }
+    public void execute(String id, int type, String txt, String img){
+        if(type == 1){
+            questWind.setText(txt);
+        }else if(type == 2){
+            questWind.setImage(img);
+        }else if(type == 3){
+            questWind.setText(txt);
+            questWind.setImage(img);
+        }
+        execute(id);
+    }
+    
     @Override
     public void actionPerformed(ActionEvent e) {
         System.out.println("Entered actionPerformed");
         QuestButton q = (QuestButton)(e.getSource());
         
-        //Set QuestWindow's last identity to this button's identity
-        questWind.setIndicator(q.getIdentity());
         
-        if(q.getType() == 1){
-            questWind.setText(q.getTextChange());
-        }else if(q.getType() == 2){
-            questWind.setImage(q.getImageURLChange());
-        }else if(q.getType() == 3){
-            questWind.setText(q.getTextChange());
-            questWind.setImage(q.getImageURLChange());
-        }
-        
-        qb.performBehavior(q.getIdentity());
+        execute(q.getIdentity(), q.getType(), q.getTextChange(), q.getImageURLChange());
     }
     
 }

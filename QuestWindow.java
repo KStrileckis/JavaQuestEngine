@@ -1,3 +1,9 @@
+import java.util.ArrayList;
+import java.io.PrintWriter;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -18,6 +24,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextPane;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 
 /**
  *
@@ -54,9 +63,85 @@ public class QuestWindow {
     private Color startBackgroundColor;
     private String startFontName;
     private int startFontStyle, startFontSize;
+    public ArrayList<String> choices;
+    private JMenuBar menuBar;
+    private JMenu data;
+    private JMenuItem savedata, loaddata, restart;
     /* * * * */
     
+    /*Menu Methods*/
+    //enableMenu and disableMenu are in the Panel Updating Methods
+    /*Ask for information to save the game*/
+    public boolean saveGame(){
+      return saveGame("file");
+    }
+    /*Given a filename (String), will save choices to the file*/
+    public boolean saveGame(String file){
+      try{
+      PrintWriter writer = new PrintWriter(file+".jqsav", "UTF-8");
+      for(String s : choices)
+      {
+        writer.println(saveFileEncryptor(s));
+      }
+      writer.close();
+      }
+      catch(Exception e){
+        System.out.println("Could not create save file.");
+      }
+      return true;
+    }
+    /*Ask for information to load the game*/
+    public boolean loadGame(){
+      return loadGame("file");
+    }
+    /*Given a filename (String), will load choices from the file*/
+    public boolean loadGame(String file){
+      file +=".jqsav";
+      System.out.println("Loading "+file);
+      try{
+        BufferedReader br = new BufferedReader(new FileReader(file));
+        String line = br.readLine();
+        while(line != null){
+          listener.execute(saveFileDecryptor(line));
+          line = br.readLine();
+        }
+      }
+      catch(Exception e){
+        System.out.println("Could not find save file to load.");
+      }
+      top.validate();
+      buttons.validate();
+      text.validate();
+      image.validate();
+      return true;
+    }
+    public String saveFileEncryptor(String s){
+      String sNew = "";
+      char[] sArray = s.toCharArray();
+      for(char c : sArray){
+        sNew += (char)(c+1);
+      }
+      return sNew;
+    }
+    public String saveFileDecryptor(String s){
+      String sNew = "";
+      char[] sArray = s.toCharArray();
+      for(char c : sArray){
+        sNew += (char)(c-1);
+      }
+      return sNew;
+    }
+    /* * * * * */
+    
     /*Panel Updating Methods*/
+    public void enableMenu(){
+        top.setJMenuBar(menuBar);
+        top.validate();
+    }
+    public void disableMenu(){
+        top.setJMenuBar(null);
+        top.validate();
+    }
     public void saveAsStart(){
         startImg = ((JLabel)(image.getComponent(0)));
         startTxt = text.getText();
@@ -300,6 +385,9 @@ public class QuestWindow {
         this(title, 495, 500);
     }
     public QuestWindow(String title, int x, int y){
+      this(title, x, y, 0, 0);
+    }
+    public QuestWindow(String title, int x, int y, int startX, int startY){
         top = new JFrame(title);
         top.setPreferredSize(new Dimension(x,y));
         width = x;
@@ -348,11 +436,44 @@ public class QuestWindow {
         top.add(buttons,gbc);
         /* * * * * */
         
+        /*Create menu(s)*/
+        menuBar = new JMenuBar();
+        data = new JMenu("Data");
+        menuBar.add(data);
+        savedata = new JMenuItem("Save Progress");
+        data.add(savedata);
+        savedata.addActionListener(new ActionListener(){
+          public void actionPerformed(ActionEvent e){
+            saveGame();
+          }
+        });
+        loaddata = new JMenuItem("Load Progress");
+        data.add(loaddata);
+        loaddata.addActionListener(new ActionListener(){
+          public void actionPerformed(ActionEvent e){
+            loadGame();
+          }
+        });
+        restart = new JMenuItem("Restart");
+        data.add(restart);
+        restart.addActionListener(new ActionListener(){
+          public void actionPerformed(ActionEvent e){
+            restart();
+          }
+        });
+        /* * * * * */
+        
+        /*Choices*/
+        choices = new ArrayList<String>();
+        /* * * * * */
+        
         /*Create MediaPlayer*/
         //songPlayer = new MediaPlayer(songMedia);//moved
         /* * * * * */
         
+        top.setLocation(startX, startY);
         top.pack();
+        top.toFront();
         top.setVisible(true);
         top.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         

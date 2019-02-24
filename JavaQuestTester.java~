@@ -26,8 +26,7 @@ public class JavaQuestTester {
         top.darkenBackground();
         
         top.saveAsStart();
-        top.setGrayImage();
-        
+        top.enableMenu();
         //Establish behaviors
         QuestBehaviorHandler handle = new QuestBehaviorHandler(top);
     }
