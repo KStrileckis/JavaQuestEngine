@@ -317,12 +317,15 @@ public class QuestWindow {
   }
   public boolean setText(String s){
     text.setText(s);
+    text.revalidate();
     top.setVisible(true);
     return true;
   }
   public boolean addQuestButton(QuestButton b){
     b.addActionListener(listener);
     buttons.add(b);
+    buttons.revalidate();
+    top.setVisible(true);
     return true;
   }
   public void clearButtons(){
@@ -332,6 +335,7 @@ public class QuestWindow {
       }
       catch(ArrayIndexOutOfBoundsException e){
         buttons.revalidate();
+        top.setVisible(true);
         return;
       }
     }
