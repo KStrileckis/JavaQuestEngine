@@ -10,6 +10,8 @@ public class JavaQuestTester {
         top.setText("There are two paths ahead of you. \nOne leads into a cave, the other into the valley.");
         top.setBackground("red");
         top.setFontSize(14);
+        top.setCredits("Kevin Strileckis");
+        top.playSound("sfx\\Dance1.wav");
         
         //Set up beginning functionality
         QuestButton button1 = new QuestButton(top, 1, "Go in the cave");
@@ -43,6 +45,7 @@ class QuestBehaviorHandler extends QuestBehavior
     @Override
     public boolean performBehavior(String identity) {
         top.swapTextAndImage();
+        top.stopCurrentSound();
         
         /*Cave Path*/
         if(identity.equals("Cave")){
