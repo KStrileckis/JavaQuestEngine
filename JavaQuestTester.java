@@ -58,6 +58,11 @@ class QuestBehaviorHandler extends QuestBehavior
             leave.setIdentity("Leave");
             top.addQuestButton(leave);
             top.restartCurrentSound();
+            System.out.println("Current: " + top.getCurrentSoundFrame());
+            System.out.println("Current: " + top.getFrameLength());
+            top.setCurrentSoundFrame(top.getFrameLength() / 2);
+            System.out.println("Current: " + top.getCurrentSoundFrame());
+            System.out.println("Current: " + top.getFrameLength());
         }
         else if(identity.equals("Leave")){
             top.restart("You return to the outside world. \nYou are back at the fork.\n\n");

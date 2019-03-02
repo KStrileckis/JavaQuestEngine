@@ -181,10 +181,9 @@ public class QuestWindow {
     clip.start();
   }
   public int getCurrentSoundFrame(){ return clip.getFramePosition(); }
+  public int getFrameLength(){ return clip.getFrameLength(); }
   public void setCurrentSoundFrame(int frame){
-    clip.stop();
     clip.setFramePosition(frame);
-    clip.start();
   }
   /* * * * * */
   
