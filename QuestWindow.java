@@ -31,6 +31,7 @@ import javax.swing.JOptionPane;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import javax.sound.sampled.FloatControl;
 
 /**
  *
@@ -170,6 +171,20 @@ public class QuestWindow {
     currentSound_string = "";
     soundPlaying = false;
     clip.stop();
+  }
+  public void restartCurrentSound(){
+    if(clip == null){
+      return;
+    }
+    clip.stop();
+    clip.setFramePosition(0);
+    clip.start();
+  }
+  public int getCurrentSoundFrame(){ return clip.getFramePosition(); }
+  public void setCurrentSoundFrame(int frame){
+    clip.stop();
+    clip.setFramePosition(frame);
+    clip.start();
   }
   /* * * * * */
   

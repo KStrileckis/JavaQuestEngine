@@ -57,6 +57,7 @@ class QuestBehaviorHandler extends QuestBehavior
             QuestButton leave = new QuestButton(top, 1, "Leave", "You return to the outside world. \nYou are back at the fork.");
             leave.setIdentity("Leave");
             top.addQuestButton(leave);
+            top.restartCurrentSound();
         }
         else if(identity.equals("Leave")){
             top.restart("You return to the outside world. \nYou are back at the fork.\n\n");
